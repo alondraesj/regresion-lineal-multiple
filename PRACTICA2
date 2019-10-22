@@ -1,0 +1,17 @@
+x1<-c(21,21,7,7,28,0,14,14,14)
+x2<-c(.65,.55,.65,.55,.6,.6,.7,.5,.6)
+y<-c(33.55,47.55,35,35.9,40.9,39.1,31.55,48,42.3)
+x3<-c(x1*x2)
+x4<-c(x2^2)
+
+mod<- lm(y ~ x1+x2+x3+x4)
+rm<-predict(mod) #Me da las Y gorro
+rm
+summary(mod)
+
+
+y1=84.8167+.1643*14-79.6667*.6
+y1
+#y1G=39.31
+
+#Podemos observar que la r^2 aumenta aunque las betas no sena significativas 
