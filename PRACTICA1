@@ -1,0 +1,32 @@
+f<-c(30,40,30,40,30,40,30,40,30,40,30,40,30,40,30,40,25,45,35,35,35,35,35,35,35,35,35,35,35,35)
+p<-c(60,60,90,90,60,60,90,90,60,60,90,90,60,60,90,90,75,75,45,105,75,75,75,75,75,75,75,75,75,75)
+t<-c(175,175,175,175,225,225,225,225,175,175,175,175,225,225,225,225,200,200,200,200,150,250,200,200,200,200,200,200,200,200)
+ti<-c(15,15,15,15,15,15,15,15,25,25,25,25,25,25,25,25,20,20,20,20,20,20,10,30,20,20,20,20,20,20)
+r<-c(26.2,26.3,39.8,39.7,38.6,35.5,48.8,37.8,26.6,23.4,38.6,52.1,39.5,32.3,43,56,35.2,46.9,22.7,58.7,34.5,44,35.7,41.8,36.5,37.6,40.3,46,27.8,40.3)
+
+
+datos2 <- data.frame(f,p,t,ti)
+mod<- lm(r ~ f+p+t+ti)
+rm<-predict(mod) #Me da las Y gorro
+rm
+summary(mod)
+
+require(ggplot2)
+qplot(f, r, data=datos2, geom=c("point", "smooth"))
+#, method="lm", formula= y ~ poly(x, 2)
+
+#ECUACION
+#y=-37.48+.2117*X1+.4983*X2+.1297*X3+.2583*X4.............+5.158
+
+#Interpreta X3
+#Se estima que .1297gm es el cambio promdio en resistencia asociado con unaumento de mun grado de 
+#temperatura cuando las otras v.i se mantinen fijas
+
+yG=-37.48+.2117*35+.4983*75+.1297*200+.2583*20
+yG
+#yG=38.408
+
+names(mod)
+#Si queremos un solo objeto ponemos mod$objeto
+YGS<-mod$fitted.values
+YGS
