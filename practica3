@@ -1,0 +1,33 @@
+x1<-c(0,20,0,20,40,0,5,10,15,20,0,0,0,0,20,20,20,20)
+x2<-c(0,0,1,1,1,5,5,5,5,5,0,1,3,5,0,1,3,5)
+y<-c(6.1,7.5,6.2,7.6,8.6,6.1,6.4,6.7,6.9,7.2,6.1,6.2,6.1,6.1,7.5,7.6,7.2,7.2)
+k=2
+
+mod<- lm(y ~ x1+x2)
+rm<-predict(mod) #Me da las Y gorro $R-squared$mod
+rm
+summary(mod)
+
+f=(0.9838/k)/((1-0.9838)/(length(y)-(k+1)))
+f
+
+##IC
+y=6.227686+0.061823*20-0.038721*1
+y
+
+##LOS p-value SI DESCRIBEN EL MODELO YA QUE TODOS SON MENORES A 0.05
+
+
+t<-qt(.025,15,lower.tail =T)
+t
+
+li=y+t*(0.0332)
+li
+ls=y-t*(0.0332)
+ls
+
+#intervalo de prediccion
+ls2=y-t*((0.100051)^2+(0.0332)^2)^(1/2)
+ls2
+li2=y+t*((0.100051)^2+(0.0332)^2)^(1/2)
+li2
