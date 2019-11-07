@@ -1,0 +1,76 @@
+y <- c(11.13,10.98,12.56,11.46,12.38,12.43,12.55,10.59,11.15,10.55,9.25,9.58,11.59,10.68,11.73,10.81,12.68)
+x1 <- c(35,25,30,30,30,30,30,25,30,30,30,25,35,35,35,25,30)
+x2 <- c(110,130,110,130,110,110,110,110,130,90,90,90,110,90,130,110,110)
+x3 <- c(160,180,180,200,180,180,180,160,160,200,160,180,200,180,180,200,180)
+x4 <- x1^2
+x5 <- x2^2
+x6 <- x3^2
+x7 <- x1*x2
+x8 <- x1*x3
+x9 <- x2*x3
+
+modelo <- lm(y~x1+x2+x3+x4+x5+x6+x7+x8+x9)
+summary(modelo)
+modelo$coefficients
+
+# Al correr el modelo completo, no lo rechazamos con base en su R^2 ajustada,, porque tiene un valor muy alto.
+# Rechazamos H0 porque el valor de p-value es menos a 0.05  
+
+modelo2 <- lm(y~x1+x2+x3)
+summary(modelo2)
+modelo2$coefficients
+
+anova(modelo)
+anova(modelo2)
+
+SSEl <- 11.4281
+SSEk <- 0.2152
+n <- 17
+k <- 9
+l <- 3
+
+# Para justificar la inclusión de las variables independientes X4, X5, X6, X7, X8 y X9 se hace un modelo sin esas variables y
+  # comparamos el valor de las f para saber cuál es mejor.
+
+# Las hipótesis que se plantean son:
+  # H0: B4 = B5 = ... = B9 = 0
+  # Ha: Al menos una Bi es diferente de 0; i = 4,5,...,9
+
+f1 <- ((SSEl-SSEk)/(k-l))/(SSEk/(n-(k+1)))
+f1
+
+f2 <- qf(0.05,6,7,lower.tail = FALSE)
+f2
+
+# Si el valor de f1 que calculammos es mayor a f2 (que es el de las tablas) rechazamos H0 
+# Por ello decimos que el modelo completo es mejor que el reducido
+
+
+# Ahora vamos a probar si las variables independientes con altos valores de p-values; en este caso las hipótesis son:
+  # H0: B7 = B8 = B9 = 0
+  # Ha: Al menos una Bi es diferente de 0; i = 7,8,9
+
+l2 <- 6   # l es el modelo con las primeras 6 betas
+k2 <- 9   # k es el modelo con todas las betas
+
+modelo3 <- lm(y~x1+x2+x3+x4+x5+x6)
+summary(modelo3)
+anova(modelo3)
+
+SSEl2 <- 0.5053
+SSEk <- 0.2152
+n <- 17
+
+f3 <- ((SSEl2-SSEk)/(k2-l2))/(SSEk/(n-(k2+1)))
+f3
+
+
+f4 <- qf(0.05,3,7,lower.tail = FALSE)
+f4
+f5 <- qf(0.01,3,7,lower.tail = FALSE)
+f5
+f6 <- qf(0.1,3,7,lower.tail = FALSE)
+f6
+
+# No rechazamos H0 en f4 y f5 es decir, las betas son iguales a 0 (99% y 95%)
+# Para un nivel de confianza de 90% decimos que hay al menos una diferente de 0
